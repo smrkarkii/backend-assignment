@@ -1,4 +1,5 @@
-const pool = require("../queries")
+
+const pool = require("../queries");
 const bcrypt= require("bcrypt")
 const jwtgenerator = require("../utils/jwtgenerator")
 exports.signin = async (req, res) => {
