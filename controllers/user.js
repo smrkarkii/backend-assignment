@@ -3,7 +3,8 @@ const pool = require("../queries");
 const bcrypt= require("bcrypt")
 const jwtgenerator = require("../utils/jwtgenerator")
 exports.signin = async (req, res) => {
-    const {username, user_password, email, phone} = req.body;
+    const {username, user_password, email, phone,role} = req.body;
+    console.log(username)
     try{
         
         const user = await pool.query("SELECT * FROM users  WHERE email = $1", [email] )
@@ -22,13 +23,12 @@ exports.signin = async (req, res) => {
 
           //save the user
          let newUser = await pool.query(
-            "INSERT INTO users (username, user_password, email, phone) VALUES ($1,$2,$3,$4) RETURNING *", [username, bcryptpassword, email, phone])
+            "INSERT INTO users (username, user_password, email, phone, role) VALUES ($1,$2,$3,$4, $5) RETURNING *", [username, bcryptpassword, email, phone,role])
 
              //jwt generation 
-        const token = jwtgenerator(newUser.rows[0].user_id)
-        console.log(token)
        
-        return res.status(200).json({token});
+       
+        return res.status(200).json({Success:newUser.rows});
 
         
 
@@ -50,10 +50,12 @@ exports.getusers = async (req, res) => {
 
 exports.login = async(req,res) => {
     const {email, user_password} = req.body;
+    const user = await pool.query("SELECT * FROM users  WHERE email = $1 ", [email] )
    
     try{
         //check if user exists
-        const user = await pool.query("SELECT * FROM users  WHERE email = $1 ", [email] )
+        
+        console.log(user.rows)
         if(user.rows.length === 0){
             return res.status(401).json("No user exists")
         }
@@ -63,8 +65,8 @@ exports.login = async(req,res) => {
         if(!validPassword ){ 
             return res.status(401).json("Incorrect")
         }
-        const jwtToken = jwtgenerator(user.rows[0].id)
-        return res.json({jwtToken})
+        const jwtToken = jwtgenerator({id: user.rows[0].user_id, role: user.rows[0].role})
+        return res.json({jwtToken,user})
     
         
         //

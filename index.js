@@ -6,6 +6,7 @@ const cors = require("cors");
 const user_routes = require("./routes/users")
 const product_routes = require("./routes/product")
 const order_routes = require("./routes/order")
+const reports_routes = require("./routes/reports")
 const bcrypt = require("bcrypt")
 const swaggerjsdoc = require("swagger-jsdoc")
 const swaggerui = require("swagger-ui-express")
@@ -22,6 +23,7 @@ app.get("/", (req,res) => {
 app.use(user_routes);
 app.use(product_routes);
 app.use(order_routes);
+app.use(reports_routes);
 
 const options = {
 
