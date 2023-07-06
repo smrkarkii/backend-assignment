@@ -33,8 +33,9 @@ exports.create = async (req, res) => {
 };
 //to see all the orders
 exports.get = async (req, res) => {
+  const order_id = req.params;
   try {
-    const order = await pool.query("SELECT * FROM orders")
+    const order = await pool.query("SELECT * FROM orders where order_id = $1",[order_id])
     return res.status(200).json(order.rows);
 
 } catch (error) {

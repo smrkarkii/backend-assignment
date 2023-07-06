@@ -43,8 +43,9 @@ exports.update = async (req, res) => {
     }
   };
 exports.retrieve = async(req, res) => {
+    const {product_id} = req.params;
         try {
-            const prod = await pool.query("SELECT * FROM product")
+            const prod = await pool.query("SELECT * FROM product where product_id = $1",[product_id])
             return res.status(200).json(prod.rows);
 
     } catch (error) {

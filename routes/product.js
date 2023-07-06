@@ -9,6 +9,6 @@ const adminRole= require("../middleware/admin")
 router.post("/products/add", authorization, adminRole, create)
 router.put("/products/edit/:product_id", authorization, adminRole, update)
 router.delete("/products/del/:product_id", authorization, adminRole, del)
-router.get("/products/get", authorization, adminRole, retrieve)
+router.get("/products/get/:product_id", authorization, retrieve)
 
 module.exports = router;

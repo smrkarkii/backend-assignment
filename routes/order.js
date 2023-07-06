@@ -8,6 +8,6 @@ const adminRole = require("../middleware/authorization.js")
 router.post("/orders/add",authorization ,create);
 router.put("/orders/edit/:order_id",authorization , edit)
 router.delete("/orders/del/:order_id",authorization , del)
-router.get("/orders/get",authorization , adminRole, get)//only admin can see all the orders from different users
+router.get("/orders/get/:order_id",authorization , adminRole, get)//only admin can see all the orders from different users
 
 module.exports = router;
