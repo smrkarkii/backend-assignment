@@ -31,7 +31,7 @@ exports.create = async (req, res) => {
     res.status(500).json({ error: e.message });
   }
 };
-//to see all the orders
+//to see the orders using order_id
 exports.get = async (req, res) => {
   const order_id = req.params;
   try {

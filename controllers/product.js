@@ -42,6 +42,7 @@ exports.update = async (req, res) => {
       return res.status(500).json(error.message);
     }
   };
+  //to find the products using product id
 exports.retrieve = async(req, res) => {
     const {product_id} = req.params;
         try {
